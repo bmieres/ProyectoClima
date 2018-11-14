@@ -6,20 +6,24 @@ matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import tkinter
 import matplotlib.pyplot as plt
-wd=openpyxl.load_workbook('Libro1.xlsx')
+wd=openpyxl.load_workbook('EC_series.xlsx')
 #hoja = excel.get_sheet_by_name('Hoja1')
 ws = wd.active
-first_column = ws['A']
+first_column = ws['D']
+second_column=ws['E']
 Ventana=tkinter.Tk()
 def graphic():
     x=zeros(len(first_column))
     for i in range(len(first_column)): 
-        print(first_column[i].value)
+        #print(first_column[i].value)
         x[i]=first_column[i].value
-        
-    y=x
-    print (x)
-    plt.plot(x,y)
+     
+    y=zeros(len(second_column))
+    for i in range(len(first_column)): 
+        #print(second_column[i].value)
+        y[i]=second_column[i].value
+    
+    plt.plot(y,x)
     fig.canvas.draw()
 
 fig = plt.figure()
@@ -28,7 +32,7 @@ FIGURE.get_tk_widget().grid(row=0, column=0)
 
 
 Ventana.title("ClimatGraphic")
-Ventana.geometry('380x300')
+Ventana.geometry('1000x1200')
 Ventana.configure(background='blue')
 tkinter.Button(Ventana, text="graficar",command = graphic).grid(row=1, column=0)
 
