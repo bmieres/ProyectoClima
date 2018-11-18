@@ -1,0 +1,103 @@
+import tkinter as tk
+from tkinter import messagebox
+import numpy as np
+from numpy import*
+import matplotlib
+matplotlib.use('TkAgg')
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt
+from openpyxl import load_workbook
+wb=load_workbook("EC_series2.xlsx")
+ws = wb.active
+first_column = ws['D']
+second_column = ws['E']
+first_column2 = ws['D']
+second_column2 = ws['E']
+first_column3 = ws['D']
+second_column3 = ws['E']
+
+def graficar1():
+    x=zeros(len(first_column))
+    for i in range(len(first_column)): 
+        #print(first_column[i].value)
+        x[i]=first_column[i].value
+     
+    y=zeros(len(second_column))
+    for i in range(len(second_column)): 
+        #print(second_column[i].value)
+        y[i]=second_column[i].value
+    plt.plot(y, x)
+    fig.canvas.draw()
+    
+
+def graficar2():
+    x=zeros(len(first_column2))
+    for i in range(len(first_column2)): 
+        #print(first_column2[i].value)
+        x[i]=first_column2[i].value
+     
+    y=zeros(len(second_column2))
+    for i in range(len(second_column2)): 
+        #print(second_column2[i].value)
+        y[i]=second_column2[i].value
+    plt.plot(y, x)
+    fig.canvas.draw()
+    
+def graficar3():
+    x=zeros(len(first_column3))
+    for i in range(len(first_column3)): 
+        #print(first_column3[i].value)
+        x[i]=first_column3[i].value
+     
+    y=zeros(len(second_column3))
+    for i in range(len(second_column3)): 
+        #print(second_column3[i].value)
+        y[i]=second_column3[i].value
+    plt.plot(y, x)
+    fig.canvas.draw()
+    plt.close()
+
+
+def validar():
+    if entrada1.get()=='123':
+        abrirventana2()
+    else:
+        messagebox.showwarning("Contrasena incorrecta", "Intente nuevamente")
+
+def abrirventana2():
+    
+    win=tk.Toplevel()
+    win.configure(bg='blue')
+    win.title("Graficos")
+    e3=tk.Label(win, text="GraphicWeather", bg='blue', fg='white')
+    e3.pack(padx=5, pady=5, ipadx=5, ipady=5, fill=tk.X)
+    boton=tk.Button(win, text="graficar 1", command=graficar1)
+    boton.pack(side=tk.TOP)
+    boton=tk.Button(win, text="graficar 2", command=graficar2)
+    boton.pack(side=tk.TOP)
+    boton=tk.Button(win, text="graficar 3", command=graficar3)
+    boton.pack(side=tk.TOP)
+    boton2= tk.Button(win, text="salir", command=win.destroy)
+    boton2.pack(side=tk.TOP)
+    
+
+def cerrarventana():
+    ventana.destroy()
+
+ventana=tk.Tk()
+ventana.title("Graphic")
+ventana.geometry('380x300')
+ventana.configure(bg='blue')
+e1=tk.Label(ventana, text="password", bg='red', fg='white')
+e1.pack(padx=5, pady=5, ipadx=5, ipady=5)
+entrada1=tk.Entry(ventana)
+entrada1.pack(fill=tk.X, padx=5, pady=5, ipadx=5, ipady=5)
+boton=tk.Button(ventana, text="Nueva Ventana", fg="blue", command=abrirventana2)
+boton.pack(side=tk.TOP)
+boton3=tk.Button(ventana, text="validar", fg="blue", command=validar)
+boton3.pack(side=tk.TOP)
+
+fig = plt.figure()
+FIGURE= FigureCanvasTkAgg(fig, master=ventana)
+FIGURE.get_tk_widget().pack(side=tk.TOP)
+ventana.mainloop()
