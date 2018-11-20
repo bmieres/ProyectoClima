@@ -1,0 +1,105 @@
+import tkinter as tk
+from tkinter import messagebox
+import numpy as np
+from numpy import*
+import matplotlib
+matplotlib.use('TkAgg')
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt
+from openpyxl import load_workbook
+
+wb=load_workbook("EC_series2.xlsx")
+ws = wb.active
+first_column = ws['D']
+second_column = ws['E']
+first_column2 = ws['A']
+second_column2 = ws['E']
+first_column3 = ws['B']
+second_column3 = ws['E']
+
+
+def validar():
+    if entrada1.get()=='123':
+        abrirventana2()
+    else:
+        messagebox.showwarning("Contrasena incorrecta", "Intente nuevamente")
+
+def graficar1(entradaa,entradab):
+
+    s=len(first_column)
+    d=len(second_column)
+    x=zeros(s)
+    for i in range(entradaa,s-entradab): 
+            #print(first_column[i].value)
+        x[i]=first_column[i].value
+     
+    y=zeros(d)
+
+    for i in range(entradaa.get,d-entradab): 
+           #print(second_column[i].value)
+        y[i]=second_column[i].value
+    
+    plt.plot(y, x)
+    fig.canvas.draw()
+    
+    plt.cla()
+
+
+
+
+
+
+   
+
+def abrirventana2():
+    ventana.withdraw()
+    win=tk.Toplevel()
+    win.configure(bg='blue')
+    win.title("Graficos")
+    FIGURE= FigureCanvasTkAgg(fig, master=win)
+    FIGURE.get_tk_widget().grid(row=0, column=0)
+    boton3=tk.Button(win, text="graficar 1", command=ventana3)
+    boton3.grid(row=1, column=0)
+    boton4=tk.Button(win, text="graficar 2", command=graficar2)
+    boton4.grid(row=2, column=0)
+    boton5=tk.Button(win, text="graficar 3", command=graficar3)
+    boton5.grid(row=3, column=0)
+    boton6= tk.Button(win, text="salir", command=win.destroy)
+    boton6.grid(row=4, column=0)
+
+
+
+
+
+
+
+ventana=tk.Tk()
+ventana.title("Graphic")
+ventana.geometry('380x300')
+ventana.configure(bg='blue')
+e1=tk.Label(ventana, text="password", bg='red', fg='white')
+e1.pack(padx=5, pady=5, ipadx=5, ipady=5)
+entrada1=tk.Entry(ventana)
+entrada1.pack(fill=tk.X, padx=5, pady=5, ipadx=5, ipady=5)
+fig = plt.figure()
+boton1=tk.Button(ventana, text="Nueva Ventana", fg="blue", command=abrirventana2)
+boton1.pack(side=tk.TOP)
+
+boton2=tk.Button(ventana, text="validar", fg="blue", command=validar)
+boton2.pack(side=tk.TOP)
+ 
+win2=tk.Toplevel()
+win2.configure(bg='blue')
+win2.title("Graficos")
+e4=tk.Label(win2, text="password", bg='red', fg='white')
+e4.pack(padx=5, pady=5, ipadx=5, ipady=5)
+entrada2=tk.Entry(win2)
+entrada2.pack(fill=tk.X, padx=5, pady=5, ipadx=5, ipady=5)
+entrada3=tk.Entry(win2)
+entrada3.pack(fill=tk.X, padx=5, pady=5, ipadx=5, ipady=5)
+j=entrada3.get
+k=entrada2.get
+boton7=tk.Button(win2, text="graficar 1", command=graficar1(int(k),int(j)))
+boton7.pack(side=tk.TOP)
+
+ventana.mainloop()
